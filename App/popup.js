@@ -51,5 +51,12 @@ document.addEventListener('DOMContentLoaded', function() {
         image_to_copy.setAttribute("src", "")
     });
 
+    var links = document.getElementsByClassName("external_link");
 
+    for(var i = 0 ; i < links.length ; i++){
+        links[i].addEventListener("click", function(event){
+            // Create new tab with the address
+            chrome.tabs.create({ url: event.target.href});
+        });
+    }
 });
