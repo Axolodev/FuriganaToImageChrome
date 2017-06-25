@@ -1,0 +1,51 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+
+<head>
+    <title>Getting Started Extension's Popup</title>
+    <link rel="stylesheet" href="popup.css">
+    <script src="popup.js" charset="utf-8"></script>
+    <script src="canvas2image.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="canvas-location">
+            <canvas id="textCanvas"></canvas>
+            <div id="copyable">
+                <img src="" alt="" id="image_to_copy">
+            </div>
+        </div>
+        <div class="input">
+            <div class="">
+                <label for="help-text">Help text</label>
+                <input type="text" id="help_text_input">
+            </div>
+            <div class="">
+                <label for="main-text">Main text</label>
+                <input type="text" id="main_text_input">
+            </div>
+            <div class="buttons">
+                <button id="clear_button">Clear</button>
+                <button id="go_button">Go</button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+        <div class="links">
+            <ul>
+                <li><a href="#">About me</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Donate</a></li>
+                <li><a href="#">Github</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
