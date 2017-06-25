@@ -58,10 +58,17 @@ button:active {
     box-shadow: 0 1px 2px #444;
 }
 
+input[type="text"] {
+    border-radius: 3px;
+    box-shadow: none;
+}
+
 #image_to_copy {
     width: 200px;
+    max-width: 200px;
     border: 1px solid black;
     height: 150px;
+    max-height: 150px;
 }
 
 .links>ul{

@@ -23,16 +23,13 @@ document.addEventListener('DOMContentLoaded', function() {
     canvas.style.height = canvas.height + "px";
 
     ctx.textAlign = "center";
-    ctx.clear = function() {
-        this.clearRect(0, 0, canvas.width, canvas.height);
-    }
 
     go_button.addEventListener("click", function() {
         var help_text = help_text_input.value;
         var main_text = main_text_input.value;
 
-        // clear previous text
-        ctx.clear();
+        // Clear previous text
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Prepare canvas for Help text
         ctx.font = help_font_size + " " + help_font_style;
@@ -41,14 +38,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Prepare canvas for Main text
         ctx.font = main_font_size + " " + main_font_style;
-            // Render main text
+        // Render main text
         ctx.fillText(main_text, canvas.width / 2, 130);
 
         image_to_copy.setAttribute("src", canvas.toDataURL("image/png"))
     });
 
     clear_button.addEventListener("click", function() {
-        ctx.clear();
+        help_text_input.value = "";
+        main_text_input.value = "";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        image_to_copy.setAttribute("src", "")
     });
 
 
