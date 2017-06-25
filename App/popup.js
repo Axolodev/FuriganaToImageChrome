@@ -1,7 +1,6 @@
 "use strict";
 
 document.addEventListener('DOMContentLoaded', function() {
-    var go_button = document.getElementById("go_button");
     var clear_button = document.getElementById("clear_button");
     var help_text_input = document.getElementById("help_text_input");
     var main_text_input = document.getElementById("main_text_input");
@@ -24,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     ctx.textAlign = "center";
 
-    go_button.addEventListener("click", function() {
+    function renderText() {
         var help_text = help_text_input.value;
         var main_text = main_text_input.value;
 
@@ -42,7 +41,18 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fillText(main_text, canvas.width / 2, 130);
 
         image_to_copy.setAttribute("src", canvas.toDataURL("image/png"))
-    });
+    }
+
+    function recalculateDimensions(){
+        var help_text = help_text_input.value;
+        var main_text = main_text_input.value;
+
+        
+
+    }
+
+    help_text_input.addEventListener("input", renderText);
+    main_text_input.addEventListener("input", renderText);
 
     clear_button.addEventListener("click", function() {
         help_text_input.value = "";

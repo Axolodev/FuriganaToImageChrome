@@ -12,7 +12,7 @@
   },
   "permissions": [
     "tabs",
-    "clipboardWrite",
-    "https://ajax.googleapis.com/"
+    "storage",
+    "clipboardWrite"
   ]
 }

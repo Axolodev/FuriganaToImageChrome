@@ -6,11 +6,9 @@ body {
     color: #333;
 }
 
-
 canvas {
     display: none;
 }
-
 
 .input {
     width: 200px;
@@ -30,8 +28,8 @@ canvas {
     font-size: 1.2em;
 }
 
-.buttons button {
-    width: 47%;
+#clear_button {
+    width: 97%;
     text-align: center;
     margin: 0 1%;
 }
