@@ -1,6 +1,10 @@
 "use strict";
 
-document.addEventListener('DOMContentLoaded', function() {
+/**
+* @todo allow selection of font family, color and size.
+* @todo allow selection of text position (top or bottom)
+*/
+document.addEventListener("DOMContentLoaded", function() {
     var clear_button = document.getElementById("clear_button");
     var help_text_input = document.getElementById("help_text_input");
     var main_text_input = document.getElementById("main_text_input");
@@ -41,13 +45,34 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fillText(main_text, canvas.width / 2, 130);
 
         image_to_copy.setAttribute("src", canvas.toDataURL("image/png"))
+        storeTexts();
     }
 
-    function recalculateDimensions(){
+    function storeTexts(){
         var help_text = help_text_input.value;
         var main_text = main_text_input.value;
 
-        
+        chrome.storage.sync.set({
+            "help_text": help_text,
+            "main_text": main_text
+        });
+    }
+
+    function restoreTexts(){
+        chrome.storage.sync.get(["help_text", "main_text"], function(objects){
+            help_text_input.value = objects.help_text || "";
+            main_text_input.value = objects.main_text || "";
+
+            renderText();
+        });
+    }
+
+    /**
+    * @todo fit text within image borders.
+    */
+    function recalculateDimensions(){
+        var help_text = help_text_input.value;
+        var main_text = main_text_input.value;
 
     }
 
@@ -69,4 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
             chrome.tabs.create({ url: event.target.href});
         });
     }
+
+    restoreTexts();
 });
