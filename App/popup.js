@@ -45,12 +45,12 @@ document.addEventListener("DOMContentLoaded", function() {
         // Prepare canvas for Help text
         ctx.font = help_font_size + " " + help_font_style;
         // Render help text
-        ctx.fillText(help_text, canvas.width / 2, 40);
+        ctx.fillText(help_text, canvas.width / 2, canvas.height * 0.3);
 
         // Prepare canvas for Main text
         ctx.font = main_font_size + " " + main_font_style;
         // Render main text
-        ctx.fillText(main_text, canvas.width / 2, 130);
+        ctx.fillText(main_text, canvas.width / 2, canvas.height * 0.8);
 
         image_to_copy.setAttribute("src", canvas.toDataURL("image/png"))
     }
@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
             main_text_input.value = objects.main_text || "";
 
             renderText();
+            recalculateDimensions();
         });
     }
 
@@ -71,11 +72,10 @@ document.addEventListener("DOMContentLoaded", function() {
         var help_text = help_text_input.value;
         var main_text = main_text_input.value;
 
-        var help_text_width = ctx.measureText(help_text).width;
+        var help_text_width = ctx.measureText(help_text).width / 2.5;
         var main_text_width = ctx.measureText(main_text).width;
 
         var biggest_width = Math.max(help_text_width, main_text_width);
-        console.log(biggest_width);
 
         if (biggest_width <= min_canvas_width) {
             canvas.width = min_canvas_width;
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function() {
         image_to_copy.setAttribute("src", "")
     });
 
-    var links = document.getElementsByClassName("external_link");
+    var links = document.getElementsByTagName("a");
 
     for (var i = 0; i < links.length; i++) {
         links[i].addEventListener("click", function(event) {
