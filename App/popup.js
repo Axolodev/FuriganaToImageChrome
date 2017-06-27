@@ -1,9 +1,13 @@
 "use strict";
 
 /**
-* @todo allow selection of font family, color and size.
-* @todo allow selection of text position (top or bottom)
-*/
+ * @todo add an icon for the extensions page.
+ *
+ * @todo add settings button (V2).
+ * @todo allow selection of font family, color and size (V2).
+ * @todo allow selection of text position (top or bottom) (V2).
+ * @todo allow storage of text in a "favorites" list (V2).
+ */
 document.addEventListener("DOMContentLoaded", function() {
     var clear_button = document.getElementById("clear_button");
     var help_text_input = document.getElementById("help_text_input");
@@ -20,16 +24,20 @@ document.addEventListener("DOMContentLoaded", function() {
     var main_font_size = "100px";
     var main_font_style = "'Times New Roman'";
 
-    canvas.width = 200;
-    canvas.height = 150;
+    var min_canvas_width = 200;
+    var min_canvas_height = 150;
+    var canvas_height_width_ratio = min_canvas_height / min_canvas_width;
+
+    canvas.width = min_canvas_width;
+    canvas.height = min_canvas_height;
     canvas.style.width = canvas.width + "px";
     canvas.style.height = canvas.height + "px";
-
-    ctx.textAlign = "center";
 
     function renderText() {
         var help_text = help_text_input.value;
         var main_text = main_text_input.value;
+        ctx.textAlign = "center";
+
 
         // Clear previous text
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -45,21 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.fillText(main_text, canvas.width / 2, 130);
 
         image_to_copy.setAttribute("src", canvas.toDataURL("image/png"))
-        storeTexts();
     }
 
-    function storeTexts(){
-        var help_text = help_text_input.value;
-        var main_text = main_text_input.value;
-
-        chrome.storage.sync.set({
-            "help_text": help_text,
-            "main_text": main_text
-        });
-    }
-
-    function restoreTexts(){
-        chrome.storage.sync.get(["help_text", "main_text"], function(objects){
+    function restoreTexts() {
+        chrome.storage.sync.get(["help_text", "main_text"], function(objects) {
             help_text_input.value = objects.help_text || "";
             main_text_input.value = objects.main_text || "";
 
@@ -68,15 +65,30 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     /**
-    * @todo fit text within image borders.
-    */
-    function recalculateDimensions(){
+     * @todo fit text within image borders.
+     */
+    function recalculateDimensions() {
         var help_text = help_text_input.value;
         var main_text = main_text_input.value;
 
+        var help_text_width = ctx.measureText(help_text).width;
+        var main_text_width = ctx.measureText(main_text).width;
+
+        var biggest_width = Math.max(help_text_width, main_text_width);
+        console.log(biggest_width);
+
+        if (biggest_width <= min_canvas_width) {
+            canvas.width = min_canvas_width;
+            canvas.height = min_canvas_height;
+        } else {
+            canvas.width = biggest_width;
+            canvas.height = biggest_width * canvas_height_width_ratio;
+        }
     }
 
+    help_text_input.addEventListener("input", recalculateDimensions);
     help_text_input.addEventListener("input", renderText);
+    main_text_input.addEventListener("input", recalculateDimensions);
     main_text_input.addEventListener("input", renderText);
 
     clear_button.addEventListener("click", function() {
@@ -88,12 +100,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var links = document.getElementsByClassName("external_link");
 
-    for(var i = 0 ; i < links.length ; i++){
-        links[i].addEventListener("click", function(event){
+    for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener("click", function(event) {
             // Create new tab with the address
-            chrome.tabs.create({ url: event.target.href});
+            chrome.tabs.create({
+                url: event.target.href
+            });
         });
     }
 
     restoreTexts();
+
+
+    var storeTexts = function() {
+        var help_text = help_text_input.value;
+        var main_text = main_text_input.value;
+
+        chrome.storage.sync.set({
+            "help_text": help_text,
+            "main_text": main_text
+        });
+    }
+
+    var throttledStoreTexts = _.throttle(storeTexts, 500);
+
+    help_text_input.addEventListener("input", throttledStoreTexts);
+    main_text_input.addEventListener("input", throttledStoreTexts);
 });

@@ -1,18 +1,17 @@
 {
-  "manifest_version": 2,
+    "manifest_version": 2,
 
-  "name": "Getting started example",
-  "description": "This extension shows a Google Image search result for the current page",
-  "version": "1.0",
+    "name": "Furigana to Image",
+    "description": "Provides an easy way to create image out of texts. The main purpose of this extension is to make it easier to write in Furigana (Japanese Kanji with its pronunciation on top) using images, but it can be used for other languages aswell.",
+    "version": "1.0",
 
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html",
-    "default_title": "Click here!"
-  },
-  "permissions": [
-    "tabs",
-    "storage",
-    "clipboardWrite"
-  ]
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html",
+        "default_title": "Make an image out of my text!"
+    },
+    "permissions": [
+        "tabs",
+        "storage"
+    ]
 }
