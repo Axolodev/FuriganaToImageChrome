@@ -7,6 +7,7 @@
  * @todo allow selection of font family, color and size (V2).
  * @todo allow selection of text position (top or bottom) (V2).
  * @todo allow storage of text in a "favorites" list (V2).
+ * @todo search for kanjis and pronunciation on jisho.org (V2)
  */
 document.addEventListener("DOMContentLoaded", function() {
     var clear_button = document.getElementById("clear_button");
@@ -25,11 +26,10 @@ document.addEventListener("DOMContentLoaded", function() {
     var main_font_style = "'Times New Roman'";
 
     var min_canvas_width = 200;
-    var min_canvas_height = 150;
-    var canvas_height_width_ratio = min_canvas_height / min_canvas_width;
+    var const_canvas_height = 150;
 
     canvas.width = min_canvas_width;
-    canvas.height = min_canvas_height;
+    canvas.height = const_canvas_height;
     canvas.style.width = canvas.width + "px";
     canvas.style.height = canvas.height + "px";
 
@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (biggest_width <= min_canvas_width) {
             canvas.width = min_canvas_width;
-            canvas.height = min_canvas_height;
         } else {
             canvas.width = biggest_width;
-            canvas.height = biggest_width * canvas_height_width_ratio;
         }
+
+        canvas.style.width = canvas.width + "px";
     }
 
     help_text_input.addEventListener("input", recalculateDimensions);
