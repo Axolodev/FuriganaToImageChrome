@@ -45,12 +45,12 @@ document.addEventListener("DOMContentLoaded", function() {
         // Prepare canvas for Help text
         ctx.font = help_font_size + " " + help_font_style;
         // Render help text
-        ctx.fillText(help_text, canvas.width / 2, canvas.height * 0.3);
+        ctx.fillText(help_text, canvas.width / 2, canvas.height * 0.25);
 
         // Prepare canvas for Main text
         ctx.font = main_font_size + " " + main_font_style;
         // Render main text
-        ctx.fillText(main_text, canvas.width / 2, canvas.height * 0.8);
+        ctx.fillText(main_text, canvas.width / 2, canvas.height * 0.85);
 
         image_to_copy.setAttribute("src", canvas.toDataURL("image/png"))
     }
@@ -59,9 +59,12 @@ document.addEventListener("DOMContentLoaded", function() {
         chrome.storage.sync.get(["help_text", "main_text"], function(objects) {
             help_text_input.value = objects.help_text || "";
             main_text_input.value = objects.main_text || "";
-
+            console.log(ctx.measureText(objects.main_text))
             renderText();
+            console.log(ctx.measureText(objects.main_text))
             recalculateDimensions();
+            renderText();
+            console.log(canvas)
         });
     }
 
@@ -98,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
         image_to_copy.setAttribute("src", "")
     });
 
-    var links = document.getElementsByTagName("a");
+    var links = document.getElementsByClassName("external_link");
 
     for (var i = 0; i < links.length; i++) {
         links[i].addEventListener("click", function(event) {

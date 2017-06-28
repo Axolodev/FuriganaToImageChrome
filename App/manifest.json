@@ -10,6 +10,9 @@
         "default_popup": "popup.html",
         "default_title": "Make an image out of my text!"
     },
+    "icons": {
+        "100": "icon.png"
+    },
     "permissions": [
         "tabs",
         "storage"
