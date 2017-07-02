@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
 
-    "name": "Furigana to Image",
-    "description": "Provides an easy way to create image out of texts. The main purpose of this extension is to make it easier to write in Furigana (Japanese Kanji with its pronunciation on top) using images, but it can be used for other languages aswell.",
-    "version": "1.0",
+    "name": "Text to Image",
+    "description": "Provides an easy way to create images out of texts.",
+    "version": "1.0.1",
 
     "browser_action": {
         "default_icon": "icon.png",
